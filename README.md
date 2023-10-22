@@ -1,0 +1,1 @@
+# reg_centr_assignment
