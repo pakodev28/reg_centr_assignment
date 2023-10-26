@@ -4,13 +4,12 @@ from .models import Recipe, Ingredient, CookingStep, RecipeIngredient
 
 class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
-    extra = 1  # Количество пустых форм для добавления ингредиентов
+    extra = 1
 
 
 class CookingStepInline(admin.TabularInline):
     model = CookingStep
-    extra = 1  # Количество пустых форм для добавления шагов приготовления
-
+    extra = 1
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
@@ -33,6 +32,6 @@ class IngredientAdmin(admin.ModelAdmin):
 
 @admin.register(CookingStep)
 class CookingStepAdmin(admin.ModelAdmin):
-    list_display = ("description", "time_in_minutes")
+    list_display = ("recipe", "description", "time_in_minutes")
     list_filter = ("time_in_minutes",)
     search_fields = ("description",)
