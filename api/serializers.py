@@ -1,6 +1,7 @@
 from django.db.models import F
 from rest_framework import serializers
-from recipes.models import Recipe, RecipeIngredient, CookingStep, Ingredient
+
+from recipes.models import CookingStep, Ingredient, Recipe, RecipeIngredient
 
 
 class RecipeIngredientGetDeleteSerializer(serializers.ModelSerializer):
@@ -34,6 +35,7 @@ class RecipeGetDeleteSerializer(serializers.ModelSerializer):
         many=True, source="recipeingredient_set"
     )
     cooking_steps = CookingStepGetDeleteSerializer(many=True)
+    total_cooking_time = serializers.ReadOnlyField()
 
     class Meta:
         model = Recipe

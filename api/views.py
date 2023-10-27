@@ -1,18 +1,24 @@
-from rest_framework import viewsets, status
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, status, viewsets
 from rest_framework.response import Response
+
 from recipes.models import Recipe, RecipeIngredient
-from .serializers import (
-    RecipeGetDeleteSerializer,
-    RecipeCreateUpdateSerializer,
-)
+
+from .serializers import (RecipeCreateUpdateSerializer,
+                          RecipeGetDeleteSerializer)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
     """
     Вьюсет реализует CRUD для рецептов.
+    Сортировку по total_cooking_time.
+    Фильтрацию по total_cooking_time и ingredients__name.
     """
 
     queryset = Recipe.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    filterset_fields = ["total_cooking_time", "ingredients__name"]
+    ordering_fields = ["total_cooking_time"]
 
     def get_serializer_class(self):
         """
@@ -25,7 +31,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         """
         Удаляет рецепт и связанные ингредиенты,
-        если они больше не используются.
+        если они не используются с другими рецептами.
         """
         instance = self.get_object()
 

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Recipe, Ingredient, CookingStep, RecipeIngredient
+
+from .models import CookingStep, Ingredient, Recipe, RecipeIngredient
 
 
 class RecipeIngredientInline(admin.TabularInline):
@@ -11,17 +12,13 @@ class CookingStepInline(admin.TabularInline):
     model = CookingStep
     extra = 1
 
+
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ("name", "get_total_cooking_time")
+    list_display = ("name", "total_cooking_time")
     list_filter = ("cooking_steps__time_in_minutes",)
     search_fields = ("name",)
     inlines = [RecipeIngredientInline, CookingStepInline]
-
-    def get_total_cooking_time(self, obj):
-        return obj.total_cooking_time
-
-    get_total_cooking_time.short_description = "Total Cooking Time"
 
 
 @admin.register(Ingredient)

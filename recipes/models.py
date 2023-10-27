@@ -14,17 +14,9 @@ class Recipe(models.Model):
         related_name="recipes",
         verbose_name="Ингредиенты",
     )
-
-    @property
-    def total_cooking_time(self):
-        """
-        Вычисляет и возвращает общее время приготовления
-        рецепта на основе времени каждого шага.
-        """
-        total_time = 0
-        for step in self.cooking_steps.all():
-            total_time += step.time_in_minutes
-        return total_time
+    total_cooking_time = models.PositiveIntegerField(
+        default=0, verbose_name="Общее время приготовления (в минутах)"
+    )
 
     def __str__(self):
         return self.name
@@ -61,7 +53,7 @@ class RecipeIngredient(models.Model):
     )
 
     def __str__(self):
-        return f"{self.quantity} {self.unit_of_measurement} of {self.ingredient} in {self.recipe}"
+        return f"{self.ingredient} in {self.recipe}"
 
 
 class CookingStep(models.Model):
@@ -82,3 +74,10 @@ class CookingStep(models.Model):
 
     def __str__(self):
         return f"Шаг приготовления: {self.description}"
+
+    def save(self, *args, **kwargs):
+        super(CookingStep, self).save(*args, **kwargs)
+        self.recipe.total_cooking_time = sum(
+            step.time_in_minutes for step in self.recipe.cooking_steps.all()
+        )
+        self.recipe.save()
