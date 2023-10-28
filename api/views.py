@@ -4,8 +4,10 @@ from rest_framework.response import Response
 
 from recipes.models import Recipe, RecipeIngredient
 
-from .serializers import (RecipeCreateUpdateSerializer,
-                          RecipeGetDeleteSerializer)
+from .serializers import (
+    RecipeCreateUpdateSerializer,
+    RecipeGetDeleteSerializer,
+)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):

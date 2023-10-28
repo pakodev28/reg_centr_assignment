@@ -1,6 +1,8 @@
 import random
+
 from django.core.management.base import BaseCommand
-from recipes.models import Recipe, Ingredient, RecipeIngredient, CookingStep
+
+from recipes.models import CookingStep, Ingredient, Recipe, RecipeIngredient
 
 
 class Command(BaseCommand):
