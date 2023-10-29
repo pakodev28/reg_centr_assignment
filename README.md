@@ -19,11 +19,50 @@ git clone git@github.com:pakodev28/reg_centr_assignment.git
 cd reg_centr_assignment
 ```
 ```
-copy .env.example .env
+cp .env.example .env
 ```
 - Запустите контейнеры с помощью docker-compose
 ```
 sudo docker-compose up -d
 ```
 
-Теперь сервис доступен по этому [адресу](http://127.0.0.1/api/v1/)
+Теперь сервис доступен по этому [адресу](http://127.0.0.1/api/v1/recipes/)
+
+### Пример запроса на создание рецепта
+```
+curl -X POST -H "Content-Type: application/json" -d '{
+  "name": "Плов",
+  "description": "Самый лучший на свете плов",
+  "ingredients": [
+    {
+      "ingredient": "мясо",
+      "quantity": 800,
+      "unit_of_measurement": "г"
+    },
+    {
+      "ingredient": "рис",
+      "quantity": 400,
+      "unit_of_measurement": "г"
+    }
+  ],
+  "cooking_steps": [
+    {
+      "description": "Обжарить мясо",
+      "time_in_minutes": 20
+    },
+    {
+      "description": "Добавить рис",
+      "time_in_minutes": 20
+    }
+  ]
+}' http://127.0.0.1/api/v1/recipes/
+
+```
+### Пример запроса на обновление рецепта
+```
+curl -X PATCH -H "Content-Type: application/json" -d '{
+  "name": "Новое название рецепта",
+  "description": "Новое описание рецепта",
+}' http://127.0.0.1/api/v1/recipes/<recipe_id>/
+
+```
