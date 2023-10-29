@@ -35,12 +35,12 @@ curl -X POST -H "Content-Type: application/json" -d '{
   "description": "Самый лучший на свете плов",
   "ingredients": [
     {
-      "ingredient": "мясо",
+      "name": "мясо",
       "quantity": 800,
       "unit_of_measurement": "г"
     },
     {
-      "ingredient": "рис",
+      "name": "рис",
       "quantity": 400,
       "unit_of_measurement": "г"
     }
