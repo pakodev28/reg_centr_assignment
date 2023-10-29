@@ -62,7 +62,7 @@ curl -X POST -H "Content-Type: application/json" -d '{
 ```
 curl -X PATCH -H "Content-Type: application/json" -d '{
   "name": "Новое название рецепта",
-  "description": "Новое описание рецепта",
+  "description": "Новое описание рецепта"
 }' http://127.0.0.1/api/v1/recipes/<recipe_id>/
 
 ```
