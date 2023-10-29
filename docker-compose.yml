@@ -11,7 +11,7 @@ services:
       - .env
 
   web:
-    image: pako28/recipe_api:v1
+    build: .
     restart: always
     volumes:
       - static_value:/app/static/
